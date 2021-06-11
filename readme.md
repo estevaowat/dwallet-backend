@@ -15,9 +15,11 @@ npx prisma-merge-schema --datasource ./prisma/schemas/\* --outputFile ./prisma/s
 
 ## TO DO
 
+[] Create a docker compose file creating a postgres database
 [] Upload repository to github
 [] Create integration tests
 [] Create unit tests
+[] Create a docker compose file to create postgres test database
 
 [x] Create prisma models schema
 [x] Create seeds
