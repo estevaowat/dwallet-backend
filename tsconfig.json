@@ -1,12 +1,22 @@
 {
-  "compilerOptions": {
+   "compilerOptions": {
       "lib": [
-     "esnext"
-   ],                       
-   "sourceMap": true,
-   "outDir": "dist",
-   "rootDir": "src",          
-   "strict": true,                                    
-   "esModuleInterop": true
-  }
+         "esnext"
+      ],
+      "sourceMap": true,
+      "outDir": "dist",
+      "rootDir": ".",
+      "baseUrl": "./src",
+      "resolveJsonModule": true,
+      "strict": true,
+      "esModuleInterop": true,
+      "paths": {
+         "@services/*": [
+            "services/*"
+         ],
+         "@database/*": [
+            "database/*"
+         ]
+      }
+   }
 }

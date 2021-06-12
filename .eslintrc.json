@@ -6,7 +6,7 @@
    },
    "extends": [
       "airbnb",
-      "prettier"
+      "plugin:prettier/recommended"
    ],
    "parser": "@typescript-eslint/parser",
    "parserOptions": {
@@ -44,6 +44,5 @@
       ],
       "no-useless-constructor": "off",
       "no-new": "off"
-       
    }
 }
