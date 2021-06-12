@@ -1,5 +1,6 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { createContext } from '@database/context';
+
+const context = createContext();
 
 interface Stock {
    code: string;
@@ -7,8 +8,10 @@ interface Stock {
    currentPrice: number;
 }
 
-export function createStocks(stocks: Stock[]) {}
+export function createStocks(stocks: Stock[]) {
+   return context.prisma.stock.createMany({ data: stocks });
+}
 
 export function findAll() {
-   return prisma.stock.findMany();
+   return context.prisma.stock.findMany();
 }
