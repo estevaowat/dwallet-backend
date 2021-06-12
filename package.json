@@ -49,7 +49,7 @@
   },
   "husky": {
      "hooks": {
-        "pre-commit":"yarn prettier-format && yarn lint"
+        "pre-commit":"yarn run prettier-format && yarn run lint && test:unit"
      }
   }
 }
