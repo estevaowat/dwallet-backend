@@ -15,3 +15,11 @@ export function createStocks(stocks: Stock[]) {
 export function findAll() {
    return context.prisma.stock.findMany();
 }
+
+export function findByCode(code: string) {
+   return context.prisma.stock.findUnique({
+      where: {
+         code,
+      },
+   });
+}

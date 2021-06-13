@@ -11,7 +11,7 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker compose down",
     "test:int": "yarn docker:up && yarn migrate:init && jest -i --detectOpenHandles --force-exit",
-    "test:unit": "jest -i --detectOpenHandles --force-exit",
+    "test:unit": "jest -i --force-exit",
     "test:unit:watch": "jest --watchAll",
     "prettier-format": "prettier --config .prettierrc.json 'src/**/*.ts' --write",
     "lint": "eslint . --ext .ts",
@@ -20,6 +20,7 @@
   "dependencies": {
     "@prisma/client": "^2.24.1",
     "@types/node": "^14.14.41",
+    "csv-parser": "^3.0.0",
     "express": "^4.17.1",
     "husky": "^6.0.0",
     "pg": "^8.6.0",
