@@ -7,6 +7,7 @@
       "outDir": "dist",
       "rootDir": ".",
       "baseUrl": "./src",
+      "removeComments": true,
       "resolveJsonModule": true,
       "strict": true,
       "esModuleInterop": true,

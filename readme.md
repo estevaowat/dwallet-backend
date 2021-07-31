@@ -16,16 +16,13 @@ npx prisma-merge-schema --datasource ./prisma/schemas/\* --outputFile ./prisma/s
 ## To-do
 
 [] Create unit tests
+
 [] Add github actions to the project
 
-[x] Upload repository to github
-[x] Create prisma models schema
-[x] Create seeds
-[x] Prepare gitignore
-[x] Create a docker compose file to create postgres test database
-[x] Create a integration tests
+[] Create routes
+[] Route to get stocks by userId
 
 ## Histories
 
+[x] Import stock transactions using a csv
 [] Import stocks using a csv
-[] Import stock transactions using a csv
