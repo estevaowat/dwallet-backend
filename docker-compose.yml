@@ -1,15 +1,15 @@
 # Set the version of docker compose to use
-version: "3.9"
+version: '3.9'
 
 # The containers that compose the project
 services:
-  db:
-    image: postgres:13
-    restart: always
-    container_name: integration-tests-prisma
-    ports:
-      - "6544:5432"
-    environment:
-      POSTGRES_USER: prisma
-      POSTGRES_PASSWORD: prisma
-      POSTGRES_DB: tests
+   db:
+      image: postgres
+      restart: always
+      container_name: dwallet-integration-tests
+      ports:
+         - '5433:5432'
+      environment:
+         POSTGRES_USER: postgres
+         POSTGRES_PASSWORD: dwallettests
+         POSTGRES_DB: dwallet-tests

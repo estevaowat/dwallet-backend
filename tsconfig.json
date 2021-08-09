@@ -3,21 +3,33 @@
       "lib": [
          "esnext"
       ],
-      "sourceMap": true,
-      "outDir": "dist",
+      "sourceMap": false,
+      "outDir": "./dist",
       "rootDir": ".",
       "baseUrl": "./src",
       "removeComments": true,
       "resolveJsonModule": true,
       "strict": true,
       "esModuleInterop": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
       "paths": {
          "@services/*": [
             "services/*"
          ],
+         "@repositories/*": [
+            "repositories/*"
+         ],
+         "@controllers/*": [
+            "controllers/*"
+         ],
          "@database/*": [
             "database/*"
+         ],
+         "@setup/*": [
+            "setup/*"
          ]
+
       }
    }
 }

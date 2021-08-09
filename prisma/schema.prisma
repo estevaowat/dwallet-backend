@@ -8,34 +8,28 @@ generator client {
    provider = "prisma-client-js"
 }
 
-model StockTransaction {
-   id        Int      @id @default(autoincrement())
-   stockId   Int
-   stock     Stock    @relation(fields: [stockId], references: [id])
-   userId    Int
-   user      User     @relation(fields: [userId], references: [id])
-   price     Decimal  @db.Decimal(10, 2)
-   amount    Int
-   createdAt DateTime @default(now())
-   updatedAt DateTime @updatedAt
+model Transaction {
+   id          Int      @id @default(autoincrement())
+   userId      Int
+   user        User     @relation(fields: [userId], references: [id])
+   description String   @db.VarChar(200)
+   type        Type
+   createdAt   DateTime @default(now())
+   updatedAt   DateTime @updatedAt
 }
 
-model Stock {
-   id               Int                @id @default(autoincrement())
-   code             String             @unique @db.VarChar(10)
-   name             String             @db.VarChar(100)
-   currentPrice     Decimal            @db.Decimal(10, 2)
-   createdAt        DateTime           @default(now())
-   updatedAt        DateTime           @updatedAt
-   StockTransaction StockTransaction[]
+enum Type {
+   SPENDING
+   INCOME
 }
 
 model User {
-   id               Int                @id @default(autoincrement())
-   name             String             @db.VarChar(200)
-   email            String             @unique @db.VarChar(200)
-   avatarUrl        String?            @db.VarChar(200)
-   createdAt        DateTime           @default(now())
-   updatedAt        DateTime           @updatedAt
-   StockTransaction StockTransaction[]
+   id          Int           @id @default(autoincrement())
+   name        String        @db.VarChar(200)
+   email       String        @unique @db.VarChar(200)
+   password    String        @db.VarChar(200)
+   avatarUrl   String?       @db.VarChar(200)
+   createdAt   DateTime      @default(now())
+   updatedAt   DateTime      @updatedAt
+   Transaction Transaction[]
 }

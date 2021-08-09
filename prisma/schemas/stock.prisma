@@ -1,8 +1,0 @@
-model Stock {
-   id           Int      @id @default(autoincrement())
-   code         String   @unique @db.VarChar(10)
-   name         String   @db.VarChar(100)
-   currentPrice Decimal  @db.Decimal(10, 2)
-   createdAt    DateTime @default(now())
-   updatedAt    DateTime @updatedAt
-}

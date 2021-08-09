@@ -8,6 +8,7 @@ dist/
 tmp-resolvers
 package-lock.json
 yarn.lock
+yarn-error.log
 misc/**/migrations/
 experimental/**/*.db
 .next
@@ -15,3 +16,5 @@ experimental/**/*.db
 .nuxt
 dev.db
 *.env*
+!.env.example
+coverage/
