@@ -1,5 +1,7 @@
 import { createSecretKey } from 'crypto';
+// eslint-disable-next-line import/no-unresolved
 import { SignJWT } from 'jose/jwt/sign';
+// eslint-disable-next-line import/no-unresolved
 import { jwtVerify } from 'jose/jwt/verify';
 
 import config from '../config/defaults';

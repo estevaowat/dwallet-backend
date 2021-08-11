@@ -13,7 +13,11 @@
     "prisma:migrate:dev": "dotenv -e .env.development -- npx prisma migrate dev --name ",
     "prisma:migrate:test": "npx prisma migrate dev",
     "prisma:schema:merge": "npx prisma-merge-schema --datasource ./prisma/schemas/\\* --outputFile ./prisma/schema.prisma",
-    "test:integration": "yarn docker:up && dotenv -e .env.test yarn prisma:migrate:test && STAGE=test dotenv -e .env.test yarn jest -i --verbose --detectOpenHandles",
+    "setup:tests" : "yarn docker:up && dotenv -e .env.test yarn prisma:migrate:test",
+    "test:integration": "yarn setup:tests && STAGE=test dotenv -e .env.test yarn test:integration", 
+    "test:unit": "jest -i -c jest.unit.config.ts",
+    "test:all": "jest -i",
+    "test": "yarn setup:tests && STAGE=test dotenv -e .env.test yarn test:all",
     "prettier-format": "prettier --config .prettierrc.json --write 'src/**/*.ts'"
   },
   "devDependencies": {

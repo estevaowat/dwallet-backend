@@ -6,18 +6,13 @@ import { PrismaClient } from '@prisma/client';
 import App from '../../src/app';
 
 describe('#User', () => {
-   beforeAll(async () => {
+   afterAll(async () => {
       const prisma = container.resolve<PrismaClient>('PrismaClient');
-      await prisma.user.create({
-         data: {
-            name: 'User to find by email',
-            email: 'user_find_email@account.com',
-            password: '123456',
-            avatarUrl: 'www.amazons3.com/user_find_email.png',
-         },
-      });
+      const deleteTransactions = prisma.transaction.deleteMany();
+      const deleteUsers = prisma.user.deleteMany();
+      await prisma.$transaction([deleteTransactions, deleteUsers]);
+      await prisma.$disconnect();
    });
-
    it('should create a user', async () => {
       const user = {
          name: 'Estevão Watanabe',
@@ -41,6 +36,16 @@ describe('#User', () => {
    });
 
    it('should find a user by email', async () => {
+      const prisma = container.resolve<PrismaClient>('PrismaClient');
+      await prisma.user.create({
+         data: {
+            name: 'User to find by email',
+            email: 'user_find_email@account.com',
+            password: '123456',
+            avatarUrl: 'www.amazons3.com/user_find_email.png',
+         },
+      });
+
       const response = await request(App).get('/user').type('json').query({
          email: 'user_find_email@account.com',
       });
@@ -53,14 +58,5 @@ describe('#User', () => {
             email: 'user_find_email@account.com',
          }),
       );
-   });
-
-   afterAll(async () => {
-      const prisma = container.resolve<PrismaClient>('PrismaClient');
-      const deleteTransactions = prisma.transaction.deleteMany();
-      const deleteUsers = prisma.user.deleteMany();
-      await prisma.$transaction([deleteTransactions, deleteUsers]);
-
-      await prisma.$disconnect();
    });
 });

@@ -1,9 +1,9 @@
-import request from 'supertest';
-import { container } from 'tsyringe';
+// import request from 'supertest';
+// import { container } from 'tsyringe';
 
-import { PrismaClient } from '@prisma/client';
+// import { PrismaClient } from '@prisma/client';
 
-import App from '../../src/app';
+// import App from '../../src/app';
 
 describe('#User Authentication', () => {
    // beforeAll(async () => {});

@@ -8,6 +8,7 @@ import App from '../../src/app';
 describe('#Transaction', () => {
    beforeAll(async () => {
       const prisma = container.resolve<PrismaClient>('PrismaClient');
+
       const user = {
          name: 'Create transaction',
          email: 'create_transaction@transaction.com',
@@ -49,7 +50,6 @@ describe('#Transaction', () => {
       const deleteTransactions = prisma.transaction.deleteMany();
       const deleteUsers = prisma.user.deleteMany();
       await prisma.$transaction([deleteTransactions, deleteUsers]);
-
       await prisma.$disconnect();
    });
 });

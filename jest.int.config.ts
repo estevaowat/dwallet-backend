@@ -9,6 +9,7 @@ export default {
    collectCoverage: true,
    coverageDirectory: 'coverage',
    coverageProvider: 'v8',
+   testMatch: ['**/*.int.test.ts'],
    setupFilesAfterEnv: ['<rootDir>/tests/jest.setup.ts'],
    moduleNameMapper: {
       ...pathsToModuleNameMapper(compilerOptions.paths, {

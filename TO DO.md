@@ -22,7 +22,6 @@ docker run --name dwallet-integration-tests \
 
 ### PRISMA
 
-[x] Create prisma folder and schema.prisma file
 [x] Create tables schemas (https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/using-prisma-migrate-typescript-postgres/)
 [x] User
 [x] Transaction
@@ -34,31 +33,22 @@ docker run --name dwallet-integration-tests \
 []
 [x] Merge schemas into schema.prisma
 
-### User repository
-
-[x] Add prisma to Prisma User Repository
-
 ### TESTS
 
 -  [x] Configure integration tests
+
    -  [x] Start the container and create the database
    -  [x] Migrate the schema
    -  [x] Run the tests
    -  [x] Destroy the container
 
+-  [x] Run `yarn test:integration` only for files when has int.test in name;
+-  [x] Create a script `yarn test:unit` to run only files which has `*spec.test*` in name;
+
 [x] Configurar injeção de dependência
 
 ### Authenticate User
 
-[] Create UserAuthencationController
+[] Create a middleware to intercept the request to verify user is authenticated
 
--  [] Create a UserAuthenticationService
-   -  [] isAuthenticated
-   -  [] generateAuthenticationToken
--  [] Create a Repository for user authentication
-   -  [] isAuthenticated
-   -  [x] findUserByEmailAndPassword
--  [] Create a middleware to intercept the request to verify user is authenticated
-
-[] Run `yarn test:integration` only for files when has int.test in name
-[] Create a script `yarn test:unit` to run only files which has `*spec.test*` in name
+[] Tests if data is saved in test database when are running tests;
