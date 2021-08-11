@@ -1,6 +1,7 @@
-import ICreateUserDto from 'dtos/ICreateUserDto';
 import IUserRepository from 'repositories/UserRepository/IUserRepository';
 import { inject, injectable } from 'tsyringe';
+
+import ICreateUserDto from '@dtos/requests/ICreateUserDto';
 
 @injectable()
 class UserService {
@@ -15,6 +16,7 @@ class UserService {
          password,
          avatarUrl,
       });
+
       return user;
    }
 

@@ -9,7 +9,10 @@ export default {
    coverageDirectory: 'coverage',
    coverageProvider: 'v8',
    setupFilesAfterEnv: ['<rootDir>/tests/jest.setup.ts'],
-   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-      prefix: '<rootDir>/src',
-   }),
+   moduleNameMapper: {
+      ...pathsToModuleNameMapper(compilerOptions.paths, {
+         prefix: '<rootDir>/src',
+      }),
+      '^jose/(.*)$': '<rootDir>/node_modules/jose/dist/node/cjs/$1',
+   },
 };

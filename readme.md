@@ -7,7 +7,7 @@ This repository is the application backend for dwallet application
 ```
 docker run --name dwallet-dev \
 -e POSTGRES_PASSWORD=dwalletdev \
--p 532:5432 \
+-p 5342:5432 \
 -d postgres
 ```
 

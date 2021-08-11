@@ -5,7 +5,7 @@ import { PrismaClient } from '@prisma/client';
 
 import App from '../../src/app';
 
-describe('# User', () => {
+describe('#User', () => {
    beforeAll(async () => {
       const prisma = container.resolve<PrismaClient>('PrismaClient');
       await prisma.user.create({
@@ -17,6 +17,7 @@ describe('# User', () => {
          },
       });
    });
+
    it('should create a user', async () => {
       const user = {
          name: 'Estevão Watanabe',
@@ -50,17 +51,15 @@ describe('# User', () => {
             id: expect.any(Number),
             name: 'User to find by email',
             email: 'user_find_email@account.com',
-            password: '123456',
-            avatarUrl: 'www.amazons3.com/user_find_email.png',
          }),
       );
    });
 
    afterAll(async () => {
       const prisma = container.resolve<PrismaClient>('PrismaClient');
-
+      const deleteTransactions = prisma.transaction.deleteMany();
       const deleteUsers = prisma.user.deleteMany();
-      await prisma.$transaction([deleteUsers]);
+      await prisma.$transaction([deleteTransactions, deleteUsers]);
 
       await prisma.$disconnect();
    });

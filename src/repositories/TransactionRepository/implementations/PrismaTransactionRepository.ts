@@ -1,7 +1,7 @@
-import ICreateTransactionDto from 'dtos/ICreateTransactionDto';
 import { inject, injectable } from 'tsyringe';
 
-import { PrismaClient, Transaction } from '@prisma/client';
+import ICreateTransactionDto from '@dtos/requests/ICreateTransactionDto';
+import { PrismaClient } from '@prisma/client';
 
 import ITransactionRepository from '../ITransactionRepository';
 
@@ -11,7 +11,11 @@ export default class PrismaTransactionRepository
 {
    constructor(@inject('PrismaClient') private database: PrismaClient) {}
 
-   async create(data: ICreateTransactionDto): Promise<Transaction> {
-      return this.database.transaction.create({ data });
+   async create(listTransactions: ICreateTransactionDto[]): Promise<number> {
+      const transactionsCreated = await this.database.transaction.createMany({
+         data: listTransactions,
+      });
+
+      return transactionsCreated.count;
    }
 }

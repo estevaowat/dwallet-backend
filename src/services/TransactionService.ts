@@ -1,6 +1,7 @@
-import ICreateTransactionDto from 'dtos/ICreateTransactionDto';
 import ITransactionRepository from 'repositories/TransactionRepository/ITransactionRepository';
 import { inject, injectable } from 'tsyringe';
+
+import ICreateTransactionDto from '@dtos/requests/ICreateTransactionDto';
 
 @injectable()
 class TransactionService {
@@ -9,16 +10,8 @@ class TransactionService {
       private transactionRepository: ITransactionRepository,
    ) {}
 
-   async createTransaction({
-      userId,
-      description,
-      type,
-   }: ICreateTransactionDto) {
-      return this.transactionRepository.create({
-         userId: Number(userId),
-         description,
-         type,
-      });
+   async createTransaction(data: ICreateTransactionDto[]) {
+      return this.transactionRepository.create(data);
    }
 }
 

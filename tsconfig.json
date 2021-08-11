@@ -23,8 +23,14 @@
          "@controllers/*": [
             "controllers/*"
          ],
+         "@utils/*": [
+            "utils/*"
+         ],
          "@database/*": [
             "database/*"
+         ],
+         "@dtos/*": [
+            "dtos/*"
          ],
          "@setup/*": [
             "setup/*"

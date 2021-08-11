@@ -5,13 +5,14 @@ datasource db {
 }
 
 generator client {
-   provider = "prisma-client-js"
+   provider        = "prisma-client-js"
+   previewFeatures = ["referentialActions"]
 }
 
 model Transaction {
    id          Int      @id @default(autoincrement())
    userId      Int
-   user        User     @relation(fields: [userId], references: [id])
+   user        User     @relation(fields: [userId], references: [id], onDelete: SetNull, onUpdate: SetNull)
    description String   @db.VarChar(200)
    type        Type
    createdAt   DateTime @default(now())

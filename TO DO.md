@@ -22,8 +22,8 @@ docker run --name dwallet-integration-tests \
 
 ### PRISMA
 
-[] Create prisma folder and schema.prisma file
-[] Create tables schemas (https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/using-prisma-migrate-typescript-postgres/)
+[x] Create prisma folder and schema.prisma file
+[x] Create tables schemas (https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/using-prisma-migrate-typescript-postgres/)
 [x] User
 [x] Transaction
 [] TransactionCategory
@@ -32,7 +32,7 @@ docker run --name dwallet-integration-tests \
 [] Stock
 [] StockTransaction
 []
-[] Merge schemas into schema.prisma
+[x] Merge schemas into schema.prisma
 
 ### User repository
 
@@ -40,12 +40,25 @@ docker run --name dwallet-integration-tests \
 
 ### TESTS
 
--  [] Configure integration tests
-   -  [] Start the container and create the database
-   -  [] Migrate the schema
-   -  [] Run the tests
-   -  [] Destroy the container
+-  [x] Configure integration tests
+   -  [x] Start the container and create the database
+   -  [x] Migrate the schema
+   -  [x] Run the tests
+   -  [x] Destroy the container
 
-https://www.prisma.io/docs/guides/testing/integration-testing
+[x] Configurar injeção de dependência
 
-[] Configurar injeção de dependência
+### Authenticate User
+
+[] Create UserAuthencationController
+
+-  [] Create a UserAuthenticationService
+   -  [] isAuthenticated
+   -  [] generateAuthenticationToken
+-  [] Create a Repository for user authentication
+   -  [] isAuthenticated
+   -  [x] findUserByEmailAndPassword
+-  [] Create a middleware to intercept the request to verify user is authenticated
+
+[] Run `yarn test:integration` only for files when has int.test in name
+[] Create a script `yarn test:unit` to run only files which has `*spec.test*` in name

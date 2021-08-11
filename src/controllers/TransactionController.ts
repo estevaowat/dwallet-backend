@@ -1,13 +1,16 @@
 import { Request, Response } from 'express';
-import { container } from 'tsyringe';
+import { autoInjectable, container } from 'tsyringe';
 
 import TransactionService from '@services/TransactionService';
 
+@autoInjectable()
 class TransactionController {
    async createTransaction(req: Request, res: Response) {
       const transactionService = container.resolve(TransactionService);
-      const Transaction = await transactionService.createTransaction(req.body);
-      return res.json(Transaction);
+      const transactionsSaved = await transactionService.createTransaction(
+         req.body,
+      );
+      return res.json({ count: transactionsSaved });
    }
 }
 
