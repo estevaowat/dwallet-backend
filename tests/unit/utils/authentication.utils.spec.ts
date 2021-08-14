@@ -1,16 +1,13 @@
-import {
-   getPayloadFromJwt,
-   generateJwtToken,
-} from '@utils/authentication.utils';
+import authenticationUtils from '@utils/authentication.utils';
 
 describe('#Authentication Utils', () => {
    it('should generate JWT Token containing a payload with userId', async () => {
-      const jwt = await generateJwtToken({
+      const jwt = await authenticationUtils.generateJwtToken({
          payload: { userId: 123 },
          issuer: '123',
       });
 
-      const payload = await getPayloadFromJwt(jwt);
+      const payload = await authenticationUtils.getPayloadFromJwt(jwt);
 
       expect(payload).toEqual(
          expect.objectContaining({
@@ -22,6 +19,8 @@ describe('#Authentication Utils', () => {
 
    it('should throw error when JWT Token is invalid', async () => {
       const wrongJWT = 'WRONG_JWT';
-      await expect(getPayloadFromJwt(wrongJWT)).rejects.toThrowError();
+      const result = await authenticationUtils.getPayloadFromJwt(wrongJWT);
+
+      expect(result).toBe(null);
    });
 });

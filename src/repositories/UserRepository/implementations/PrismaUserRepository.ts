@@ -1,7 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import ICreateUserDto from '@dtos/requests/ICreateUserDto';
-import IFindUserByEmailAndPassword from '@dtos/requests/IFindUserByEmailAndPassword';
+import ICreateUserDto from '@dtos/requests/repositories/ICreateUserDto';
 import IUserFound from '@dtos/result/IUserFound';
 import { PrismaClient, User } from '@prisma/client';
 
@@ -26,38 +25,12 @@ export default class PrismaUserRepository implements IUserRepository {
       return { id, name, email };
    }
 
-   async findByEmailAndPassword({
-      email,
-      password,
-   }: IFindUserByEmailAndPassword): Promise<IUserFound | null> {
-      const user = await this.database.user.findFirst({
-         where: {
-            email,
-            password,
-         },
-      });
-
-      if (user == null) {
-         return null;
-      }
-
-      const { id, name } = user;
-      return { id, name, email };
-   }
-
-   async findByEmail(email: string): Promise<IUserFound | null> {
-      const user = await this.database.user.findFirst({
+   async findByEmail(email: string): Promise<User | null> {
+      return this.database.user.findFirst({
          where: {
             email,
          },
       });
-
-      if (user == null) {
-         return null;
-      }
-
-      const { id, name } = user;
-      return { id, name, email };
    }
 
    async create(data: ICreateUserDto): Promise<User> {

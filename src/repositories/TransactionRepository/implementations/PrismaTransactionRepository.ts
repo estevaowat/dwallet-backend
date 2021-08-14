@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import ICreateTransactionDto from '@dtos/requests/ICreateTransactionDto';
+import ICreateTransactionDto from '@dtos/requests/services/ICreateTransactionDto';
 import { PrismaClient } from '@prisma/client';
 
 import ITransactionRepository from '../ITransactionRepository';

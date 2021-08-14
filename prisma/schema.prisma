@@ -10,13 +10,15 @@ generator client {
 }
 
 model Transaction {
-   id          Int      @id @default(autoincrement())
-   userId      Int
-   user        User     @relation(fields: [userId], references: [id], onDelete: SetNull, onUpdate: SetNull)
-   description String   @db.VarChar(200)
-   type        Type
-   createdAt   DateTime @default(now())
-   updatedAt   DateTime @updatedAt
+   id              Int      @id @default(autoincrement())
+   userId          Int
+   user            User     @relation(fields: [userId], references: [id], onDelete: SetNull, onUpdate: SetNull)
+   description     String   @db.VarChar(200)
+   transactionDate DateTime
+   amount          Decimal  @db.Money
+   type            Type
+   createdAt       DateTime @default(now())
+   updatedAt       DateTime @updatedAt
 }
 
 enum Type {
@@ -25,12 +27,13 @@ enum Type {
 }
 
 model User {
-   id          Int           @id @default(autoincrement())
-   name        String        @db.VarChar(200)
-   email       String        @unique @db.VarChar(200)
-   password    String        @db.VarChar(200)
-   avatarUrl   String?       @db.VarChar(200)
-   createdAt   DateTime      @default(now())
-   updatedAt   DateTime      @updatedAt
-   Transaction Transaction[]
+   id           Int           @id @default(autoincrement())
+   name         String        @db.VarChar(200)
+   email        String        @unique @db.VarChar(200)
+   passwordHash String        @db.Text
+   salt         String        @db.Text
+   avatarUrl    String?       @db.VarChar(200)
+   createdAt    DateTime      @default(now())
+   updatedAt    DateTime      @updatedAt
+   Transaction  Transaction[]
 }

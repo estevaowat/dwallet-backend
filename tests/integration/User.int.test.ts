@@ -2,21 +2,15 @@ import request from 'supertest';
 import { container } from 'tsyringe';
 
 import { PrismaClient } from '@prisma/client';
+import authenticationUtils from '@utils/authentication.utils';
 
 import App from '../../src/app';
 
 describe('#User', () => {
-   afterAll(async () => {
-      const prisma = container.resolve<PrismaClient>('PrismaClient');
-      const deleteTransactions = prisma.transaction.deleteMany();
-      const deleteUsers = prisma.user.deleteMany();
-      await prisma.$transaction([deleteTransactions, deleteUsers]);
-      await prisma.$disconnect();
-   });
    it('should create a user', async () => {
       const user = {
-         name: 'Estevão Watanabe',
-         email: 'estevao.watanabe@gmail.com',
+         name: 'Create user',
+         email: 'create_user@email.com',
          password: '123456',
          avatarUrl: 'www.amazons3.com/estevaowat.png',
       };
@@ -27,9 +21,8 @@ describe('#User', () => {
       expect(response.body).toEqual(
          expect.objectContaining({
             id: expect.any(Number),
-            name: 'Estevão Watanabe',
-            email: 'estevao.watanabe@gmail.com',
-            password: '123456',
+            name: 'Create user',
+            email: 'create_user@email.com',
             avatarUrl: 'www.amazons3.com/estevaowat.png',
          }),
       );
@@ -37,18 +30,27 @@ describe('#User', () => {
 
    it('should find a user by email', async () => {
       const prisma = container.resolve<PrismaClient>('PrismaClient');
-      await prisma.user.create({
+      const user = await prisma.user.create({
          data: {
             name: 'User to find by email',
             email: 'user_find_email@account.com',
-            password: '123456',
+            passwordHash: '123456',
+            salt: '123',
             avatarUrl: 'www.amazons3.com/user_find_email.png',
          },
       });
 
-      const response = await request(App).get('/user').type('json').query({
-         email: 'user_find_email@account.com',
+      const jwt = await authenticationUtils.generateJwtToken({
+         payload: { userId: user.id },
       });
+
+      const response = await request(App)
+         .get('/user')
+         .type('json')
+         .set('Authorization', `Bearer ${jwt}`)
+         .query({
+            email: 'user_find_email@account.com',
+         });
 
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual(
@@ -58,5 +60,12 @@ describe('#User', () => {
             email: 'user_find_email@account.com',
          }),
       );
+   });
+
+   afterAll(async () => {
+      const prisma = container.resolve<PrismaClient>('PrismaClient');
+      const deleteUsers = prisma.user.deleteMany();
+      await prisma.$transaction([deleteUsers]);
+      await prisma.$disconnect();
    });
 });

@@ -1,7 +1,8 @@
 import IUserRepository from 'repositories/UserRepository/IUserRepository';
 import { inject, injectable } from 'tsyringe';
 
-import ICreateUserDto from '@dtos/requests/ICreateUserDto';
+import ICreateUserDto from '@dtos/requests/services/ICreateUserDto';
+import authenticationUtils from '@utils/authentication.utils';
 
 @injectable()
 class UserService {
@@ -10,10 +11,17 @@ class UserService {
    ) {}
 
    async createUser({ name, email, password, avatarUrl }: ICreateUserDto) {
+      const salt = await authenticationUtils.generateRandomSalt();
+      const passwordHash = await authenticationUtils.generatePasswordHash(
+         password,
+         salt,
+      );
+
       const user = await this.userRepository.create({
          name,
          email,
-         password,
+         passwordHash,
+         salt,
          avatarUrl,
       });
 
@@ -21,8 +29,7 @@ class UserService {
    }
 
    async findByEmail(email: string) {
-      const user = await this.userRepository.findByEmail(email);
-      return user;
+      return this.userRepository.findByEmail(email);
    }
 }
 

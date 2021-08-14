@@ -1,7 +1,7 @@
 import ITransactionRepository from 'repositories/TransactionRepository/ITransactionRepository';
 import { inject, injectable } from 'tsyringe';
 
-import ICreateTransactionDto from '@dtos/requests/ICreateTransactionDto';
+import ICreateTransactionDto from '@dtos/requests/services/ICreateTransactionDto';
 
 @injectable()
 class TransactionService {

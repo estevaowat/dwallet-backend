@@ -1,11 +1,9 @@
 import { inject, injectable } from 'tsyringe';
 
-import IFindUserByEmailAndPassword from '@dtos/requests/IFindUserByEmailAndPassword';
+import IFindUserByEmailAndPassword from '@dtos/requests/services/IFindUserByEmailAndPassword';
 import IUserRepository from '@repositories/UserRepository/IUserRepository';
-import {
-   generateJwtToken,
-   getPayloadFromJwt,
-} from '@utils/authentication.utils';
+import AppError from '@shared/AppError';
+import authenticationUtils from '@utils/authentication.utils';
 
 @injectable()
 class UserAuthenticationService {
@@ -14,30 +12,40 @@ class UserAuthenticationService {
    ) {}
 
    async isAuthenticated(jwt: string) {
-      const payload = await getPayloadFromJwt(jwt);
+      const payload = await authenticationUtils.getPayloadFromJwt(jwt);
+
+      if (payload == null) {
+         return false;
+      }
+
       const { userId } = payload;
+      const user = await this.userRepository.findById(Number(userId));
 
-      const user = this.userRepository.findById(Number(userId));
-
-      const isAuthenticated = user != null;
-
-      return isAuthenticated;
+      return user != null;
    }
 
    async generateAuthenticationToken({
       email,
       password,
    }: IFindUserByEmailAndPassword): Promise<string | null> {
-      const user = await this.userRepository.findByEmailAndPassword({
-         email,
-         password,
-      });
+      const user = await this.userRepository.findByEmail(email);
 
       if (user == null) {
-         return null;
+         throw new AppError(400, 'User or password incorrect', true);
       }
 
-      return generateJwtToken({ payload: { userId: user.id } });
+      const isPasswordValid = await authenticationUtils.isPasswordValid(
+         password,
+         user.passwordHash,
+      );
+
+      if (!isPasswordValid) {
+         throw new AppError(400, 'User or password incorrect', true);
+      }
+
+      return authenticationUtils.generateJwtToken({
+         payload: { userId: user.id },
+      });
    }
 }
 

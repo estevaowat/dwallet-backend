@@ -7,7 +7,6 @@ const userRouter = express.Router();
 
 const userController = container.resolve(UserController);
 
-userRouter.post('', userController.createUser);
 userRouter.get('', userController.findByEmail);
 
 export { userRouter };
