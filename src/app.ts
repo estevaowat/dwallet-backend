@@ -1,11 +1,12 @@
 import 'reflect-metadata';
 
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import * as dotenv from 'dotenv';
 import express from 'express';
 import 'express-async-errors';
 import { join } from 'path';
 
-import ErrorHandler from '@controllers/ErrorController';
 import setupPrismaClient from '@setup/setupPrismaClient';
 import setupRepositoriesInjection from '@setup/setupRepositoriesInjection';
 
@@ -21,9 +22,9 @@ setupPrismaClient();
 setupRepositoriesInjection();
 
 const app = express();
+app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 app.use(routes);
-
-app.use(ErrorHandler.middlewareError);
 
 export default app;

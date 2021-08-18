@@ -1,9 +1,14 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import AppError from '@shared/AppError';
 
 class ErrorHandler {
-   public static middlewareError(error: Error, req: Request, res: Response) {
+   public static middlewareError(
+      error: Error,
+      _req: Request,
+      res: Response,
+      _next: NextFunction,
+   ) {
       ErrorHandler.handleError(error, res);
    }
 
@@ -28,7 +33,7 @@ class ErrorHandler {
 
       if (error instanceof AppError) {
          return response
-            .status(500)
+            .status(error.getStatusCode())
             .json({ description: error.getDescription() });
       }
 

@@ -1,24 +1,21 @@
 import { Router } from 'express';
 import { container } from 'tsyringe';
 
+import ErrorController from '@controllers/ErrorController';
 import UserAuthenticationController from '@controllers/UserAuthenticationController';
-import UserController from '@controllers/UserController';
 
-import { transactionRouter } from './transaction.routes';
-import { userAuthenticationRouter } from './userAuthentication.routes';
+import authenticatedRoutes from './authenticatedRoutes';
+import unauthenticatedRoutes from './unauthenticatedRoutes';
 
 const router = Router();
-const userController = container.resolve(UserController);
+
 const userAuthenticationController = container.resolve(
    UserAuthenticationController,
 );
 
-router.use('/authentication', userAuthenticationRouter);
-router.post('/user', userController.createUser);
-
+router.use(unauthenticatedRoutes);
 router.use(userAuthenticationController.isUserAuthenticated);
-
-router.get('/user', userController.findByEmail);
-router.use('/transaction', transactionRouter);
+router.use(authenticatedRoutes);
+router.use(ErrorController.middlewareError);
 
 export default router;

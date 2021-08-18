@@ -43,9 +43,11 @@ class UserAuthenticationService {
          throw new AppError(400, 'User or password incorrect', true);
       }
 
-      return authenticationUtils.generateJwtToken({
+      const jwt = await authenticationUtils.generateJwtToken({
          payload: { userId: user.id },
       });
+
+      return jwt;
    }
 }
 

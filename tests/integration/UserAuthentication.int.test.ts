@@ -30,11 +30,11 @@ describe('#User Authentication', () => {
 
       expect(response.statusCode).toBe(200);
 
-      expect(response.body).toEqual(
-         expect.objectContaining({
-            jwt: expect.any(String),
-         }),
-      );
+      const cookieToken = response.headers['set-cookie'][0];
+
+      const [, jwt] = cookieToken.split('=');
+
+      expect(jwt).toEqual(expect.any(String));
    });
 
    it('should return response 400 when user not exists', async () => {

@@ -39,7 +39,14 @@ class UserAuthenticationController {
          email,
          password,
       });
-      return res.json({ jwt });
+
+      res.cookie('token', jwt, {
+         // token expires in 7 days
+         expires: new Date(Date.now() + 7),
+         secure: false, // not using https
+         httpOnly: true,
+      });
+      return res.send(jwt);
    }
 }
 
