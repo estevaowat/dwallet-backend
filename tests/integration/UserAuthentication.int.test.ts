@@ -34,7 +34,9 @@ describe('#User Authentication', () => {
 
       const [, jwt] = cookieToken.split('=');
 
-      expect(jwt).toEqual(expect.any(String));
+      expect(jwt).toStrictEqual(expect.any(String));
+      expect(response.body.name).toBe('User to authenticate');
+      expect(response.body.email).toBe('user_to_authenticate@email.com');
    });
 
    it('should return response 400 when user not exists', async () => {
@@ -48,6 +50,7 @@ describe('#User Authentication', () => {
          .send(userCredentials);
 
       expect(response.statusCode).toBe(400);
+      expect(response.body.description).toBe('User or password incorrect');
    });
    it('should return response 400 when user credentials are wrong', async () => {
       const userCredentials = {
@@ -60,6 +63,7 @@ describe('#User Authentication', () => {
          .send(userCredentials);
 
       expect(response.statusCode).toBe(400);
+      expect(response.body.description).toBe('User or password incorrect');
    });
 
    afterAll(async () => {

@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import IFindUserByEmailAndPassword from '@dtos/requests/services/IFindUserByEmailAndPassword';
+import IUserAuthenticatedDto from '@dtos/result/services/IUserAuthenticatedDto';
 import IUserRepository from '@repositories/UserRepository/IUserRepository';
 import AppError from '@shared/AppError';
 import authenticationUtils from '@utils/authentication.utils';
@@ -27,7 +28,7 @@ class UserAuthenticationService {
    async generateAuthenticationToken({
       email,
       password,
-   }: IFindUserByEmailAndPassword): Promise<string | null> {
+   }: IFindUserByEmailAndPassword): Promise<IUserAuthenticatedDto> {
       const user = await this.userRepository.findByEmail(email);
 
       if (user == null) {
@@ -47,7 +48,14 @@ class UserAuthenticationService {
          payload: { userId: user.id },
       });
 
-      return jwt;
+      return {
+         user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+         },
+         jwt,
+      };
    }
 }
 

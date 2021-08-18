@@ -35,10 +35,11 @@ class UserAuthenticationController {
       );
 
       const { email, password } = req.body;
-      const jwt = await userAuthenticationService.generateAuthenticationToken({
-         email,
-         password,
-      });
+      const { user, jwt } =
+         await userAuthenticationService.generateAuthenticationToken({
+            email,
+            password,
+         });
 
       res.cookie('token', jwt, {
          // token expires in 7 days
@@ -46,7 +47,8 @@ class UserAuthenticationController {
          secure: false, // not using https
          httpOnly: true,
       });
-      return res.send(jwt);
+
+      return res.json(user);
    }
 }
 
