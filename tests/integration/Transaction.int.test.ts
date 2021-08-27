@@ -37,11 +37,9 @@ describe('#Transaction', () => {
          .send(transaction);
 
       expect(response.statusCode).toBe(200);
-      expect(response.body).toEqual(
-         expect.objectContaining({
-            count: 1,
-         }),
-      );
+      expect(response.body.amount).toBe('7000');
+      expect(response.body.description).toBe('Salary August 2021');
+      expect(response.body.type).toBe('INCOME');
    });
 
    afterAll(async () => {
