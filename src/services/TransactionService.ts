@@ -4,7 +4,6 @@ import { Readable } from 'stream';
 import { inject, injectable } from 'tsyringe';
 
 import ICreateTransactionDto from '@dtos/requests/services/ICreateTransactionDto';
-import AppError from '@shared/AppError';
 
 @injectable()
 class TransactionService {
@@ -26,10 +25,11 @@ class TransactionService {
    }) {
       const stream = Readable.from(transactionsBuffer);
       const options = {
-         headers: ['date', 'category', 'title', 'amount'],
+         headers: true,
          delimiter: ',',
       };
-      return new Promise<void>((resolve, _) => {
+      const transactions = [];
+      return new Promise<number>((resolve, reject) => {
          stream
             .pipe(csv.parse(options))
             .on('data', async row => {
@@ -41,13 +41,15 @@ class TransactionService {
                   type: row.amount < 0 ? 'SPENDING' : 'INCOME',
                };
 
+               transactions.push(transaction);
+
                await this.transactionRepository.create(transaction);
             })
             .on('end', () => {
-               resolve();
+               resolve(transactions.length);
             })
             .on('error', () => {
-               throw new AppError(400, 'CSV Mal-formatted', true);
+               reject();
             });
       });
    }

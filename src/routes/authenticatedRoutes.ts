@@ -6,7 +6,8 @@ import TransactionController from '@controllers/TransactionController';
 import UserController from '@controllers/UserController';
 
 const router = Router();
-const upload = multer();
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 const userController = container.resolve(UserController);
 const transactionController = container.resolve(TransactionController);

@@ -29,12 +29,12 @@ class TransactionController {
       const transactionsBuffer = Object.values(files).map(
          (file: Express.Multer.File) => file.buffer,
       );
-      const transactionsSaved =
+      const countTransactionsSaved =
          await transactionService.createTransactionsByCsv({
             userId: Number(userId),
             transactionsBuffer,
          });
-      return res.json({ count: transactionsSaved });
+      return res.json({ count: countTransactionsSaved });
    }
 }
 

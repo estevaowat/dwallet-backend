@@ -40,6 +40,6 @@ describe('#Create transaction', () => {
          userId: 123,
          transactionsBuffer,
       });
-      expect(mockTransactionRepository.create).toHaveBeenCalledTimes(96);
+      expect(mockTransactionRepository.create).toHaveBeenCalledTimes(95);
    });
 });
