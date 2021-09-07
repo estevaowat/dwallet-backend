@@ -6,7 +6,9 @@
   "author": "Estevão Watanabe <estevao.watanabe@gmail.com>",
   "license": "MIT",
   "scripts": {
+   "start": "node ./dist/src/server.js",
     "start:dev": "STAGE=development tsnd  --respawn -r tsconfig-paths/register --ignore-watch node_modules --exit-child --clear ./src/server.ts",
+    "build": "tsc", 
     "docker:up": "docker-compose up -d",
     "docker:down": "docker compose down",
     "lint": "eslint . --ext .ts --fix",

@@ -1,8 +1,21 @@
-# Set the version of docker compose to use
 version: '3.9'
 
-# The containers that compose the project
 services:
+   backend:
+      build: .
+      environment:
+         DATABASE_URL: postgresql://postgres:dwalletdev@localhost:5432/dwallet
+         JWT_SECRET_TOKEN: 46fe6616b913032aa1a0beff86c3665165925ce5
+   db_develop:
+      image: postgres
+      restart: always
+      container_name: dwallet-database-dev
+      ports:
+         - '5432:5432'
+      environment:
+         POSTGRES_USER: postgres
+         POSTGRES_PASSWORD: dwalletdev
+         POSTGRES_DB: dwallet
    db:
       image: postgres
       restart: always
